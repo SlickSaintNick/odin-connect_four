@@ -1,0 +1,69 @@
+CONNECT FOUR
+
+Rules
+- Yellow and red tokens
+- Game board - 6 rows, 7 columns (note that the board size can vary)
+- 2 players take turns placing their token in chosen column
+- Pieces fall to lowest space in each column
+- First player to get four in a row horizontally, vertically or diagonally wins.
+
+My goal
+- 2-player connect four in terminal using standard board size.
+
+Objects and what they know
+Game
+    Knows:
+    - that we are playing
+    - who's turn it is
+    - if someone wins
+    Holds the Player1 and Player2 objects and therefore can find out:
+    - Player names and piece colours
+
+Player1 and Player2
+    Knows:
+    - their own name for display
+    - their piece color
+
+Board
+    Knows:
+    - the rules for placing pieces
+    - where all the pieces are
+    - the winning combinations
+
+Messages to send:
+Game -> Game: Start game loop                       (Game.game_loop)
+Game -> Game: Display board state.                  (Game.display)                          Sent to self
+Game -> Player: Your turn                           (Player1.take_turn)                     Outgoing command
+Player -> Board: What are the valid moves?          (Board.valid_moves?)                    Outgoing query
+    Board -> Player: The valid moves are x y and z  return value                            Incoming query
+Player -> Game: My move is x                        (return value from Player1.take_turn)   
+Game -> Board: <color> move is <column>             (Board.move)
+Game -> Board: Has anyone got connect 4?            (Board.)
+Board -> Game: The game continues or, the winner is (return value from Board.move)
+
+
+My plan of action:
+- Game class skeleton - it will just have the board and display, send move abilities.
+- Start with the board:
+    - Represent game state (I will use a 2D array 0-indexed)
+    - Change game state when receiving a valid move
+    - Feedback invalid move
+    - Check for win conditions
+    - Return array of valid moves
+Once the board is working, move to the players and the structure of the game.
+
+Array indices: height = 6, width = 7
+[0][0]  [0][1]  [0][2]  [0][3]  [0][4]  [0][5]  [0][6]
+[1][0]  [1][1]  [1][2]  [1][3]  [1][4]  [1][5]  [1][6]
+[2][0]  [2][1]  [2][2]  [2][3]  [2][4]  [2][5]  [2][6]
+[3][0]  [3][1]  [3][2]  [3][3]  [3][4]  [3][5]  [3][6]
+[4][0]  [4][1]  [4][2]  [4][3]  [4][4]  [4][5]  [4][6]
+[5][0]  [5][1]  [5][2]  [5][3]  [5][4]  [5][5]  [5][6]
+
+winner_vertical
+
+row 2 column 0
+    index 0
+    push[2][0]      test = ['nil']
+    index 1
+    push[]

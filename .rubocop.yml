@@ -1,0 +1,14 @@
+AllCops:
+  Exclude:
+    - 'Gemfile'
+    - 'spec/spec_helper.rb'
+  NewCops: enable
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/*'
+Layout/LineLength:
+  Exclude:
+    - 'spec/*'
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/*'
