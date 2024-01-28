@@ -2,15 +2,15 @@
 
 # Player in a game of Connect 4.
 class Player
-  attr_accessor :color
+  attr_accessor :color, :name
 
-  def initialize(color)
+  def initialize(color, name = 'NAME')
     @color = color
+    @name = name
   end
 
   def take_turn(valid_moves)
     loop do
-      print '>> '
       input = ask_user_input
       return 'EXIT' if input == 'EXIT'
 
@@ -21,6 +21,7 @@ class Player
   end
 
   def ask_user_input
+    print '>> '
     gets.chomp.strip.upcase
   end
 
