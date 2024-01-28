@@ -161,9 +161,63 @@ describe GameBoard do
       ]
     end
 
-    it 'returns false' do
+    it 'returns "tie"' do
       winner = game_board_full_tie.winner
-      expect(winner).to be false
+      expect(winner).to be 'tie'
+    end
+  end
+
+  describe '#valid_moves' do
+    context 'When the first, third and fifth row are full' do
+      subject(:game_board) { described_class.new }
+
+      before do
+        game_board.board = [
+          ['Y', nil, 'R', nil, 'R', nil, nil],
+          ['Y', nil, 'R', nil, 'R', nil, nil],
+          ['Y', nil, 'Y', nil, 'Y', nil, nil],
+          ['R', nil, 'R', nil, 'R', nil, nil],
+          ['R', nil, 'R', nil, 'Y', nil, nil],
+          ['R', nil, 'R', nil, 'R', nil, nil]
+        ]
+      end
+
+      it 'returns [1, 3, 5, 6]' do
+        moves = game_board.valid_moves
+        expect(moves).to eql([1, 3, 5, 6])
+      end
+    end
+  end
+
+  describe '#display_board' do
+    context 'When the red player has won with a rising diagonal connect 4' do
+      subject(:game_board_d_rising_win) { described_class.new }
+
+      before do
+        game_board_d_rising_win.board = [
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, 'R', 'R', nil],
+          [nil, nil, nil, 'R', 'Y', 'Y', 'Y'],
+          [nil, nil, 'R', 'Y', 'R', 'Y', 'Y'],
+          [nil, 'R', 'Y', 'R', 'R', 'Y', 'R']
+        ]
+      end
+
+      it 'displays the board correctly' do
+        return_string = game_board_d_rising_win.display_board
+        expected_string = <<~HEREDOC
+          . 1  2   3  4   5  6   7.
+          |⚫|⚫|⚫|⚫|⚫|⚫|⚫|
+          |⚫|⚫|⚫|⚫|⚫|⚫|⚫|
+          |⚫|⚫|⚫|⚫|🔴|🔴|⚫|
+          |⚫|⚫|⚫|🔴|🟡|🟡|🟡|
+          |⚫|⚫|🔴|🟡|🔴|🟡|🟡|
+          |⚫|🔴|🟡|🔴|🔴|🟡|🔴|
+          '======================='
+        HEREDOC
+        expect(return_string).to eql(expected_string)
+      end
     end
   end
 end

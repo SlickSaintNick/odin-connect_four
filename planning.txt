@@ -50,7 +50,13 @@ My plan of action:
     - Feedback invalid move
     - Check for win conditions
     - Return array of valid moves
+    - Return a single string that will display itself
 Once the board is working, move to the players and the structure of the game.
+
+- Next the player class:
+    - Obtain valid moves from board (don't need to test as the board sends this)
+    - Send a message to the board to add a move
+    - 
 
 Array indices: height = 6, width = 7
 [0][0]  [0][1]  [0][2]  [0][3]  [0][4]  [0][5]  [0][6]
@@ -60,10 +66,6 @@ Array indices: height = 6, width = 7
 [4][0]  [4][1]  [4][2]  [4][3]  [4][4]  [4][5]  [4][6]
 [5][0]  [5][1]  [5][2]  [5][3]  [5][4]  [5][5]  [5][6]
 
-winner_vertical
+winner_diagonal_rising
 
-row 2 column 0
-    index 0
-    push[2][0]      test = ['nil']
-    index 1
-    push[]
+want to start at height - 4 like others.
