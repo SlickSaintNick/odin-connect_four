@@ -4,7 +4,7 @@
 class Player
   attr_accessor :color, :name
 
-  def initialize(color, name = 'NAME')
+  def initialize(color, name = ask_name(color))
     @color = color
     @name = name
   end
@@ -18,6 +18,16 @@ class Player
 
       return input.to_i if valid_moves.include?(input.to_i)
     end
+  end
+
+  def ask_name(color)
+    puts color == 'R' ? 'RED player name?' : 'YELLOW player name?'
+    ask_user_input
+  end
+
+  def play_again?
+    puts "Press enter to play again, or type 'exit' to finish."
+    ask_user_input
   end
 
   def ask_user_input

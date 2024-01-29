@@ -17,7 +17,7 @@ describe Player do
   end
 
   describe "#take_turn" do
-    it 'returns correct value for a specific scenario' do
+    it 'returns correct value for user inputs' do
       $stdout = StringIO.new
       allow(player).to receive(:ask_user_input).and_return('1', '2', '3', 'cat', 'dog', '9', '6')
 

@@ -23,14 +23,14 @@ class GameBoard
   end
 
   def display_board
-    display = ". 1  2   3  4   5  6   7.\n"
+    display = ". 1  2  3  4  5  6  7.\n"
     0.upto(@height - 1) do |row|
       0.upto(@width - 1) do |column|
         display += "|#{game_piece(row, column)}"
       end
       display += "|\n"
     end
-    display += "'======================='\n"
+    display += "'===================='\n"
   end
 
   def game_piece(row, column)
@@ -76,6 +76,7 @@ class GameBoard
     false
   end
 
+  # The game is tied if the top row is full.
   def check_for_tie
     return 'tie' if @board[0].none?(nil)
 
@@ -88,5 +89,9 @@ class GameBoard
     return 'Y' if test_group.all?('Y')
 
     false
+  end
+
+  def clear
+    @board = @board.map { @board.map { nil } }
   end
 end

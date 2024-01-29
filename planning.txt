@@ -33,13 +33,14 @@ Board
 Messages to send:
 Game -> Game: Start game loop                       (Game.game_loop)
 Game -> Game: Display board state.                  (Game.display)                          Sent to self
-Game -> Player: Your turn                           (Player1.take_turn)                     Outgoing command
 Player -> Board: What are the valid moves?          (Board.valid_moves?)                    Outgoing query
     Board -> Player: The valid moves are x y and z  return value                            Incoming query
+Game -> Player: Your turn, the valid moves are...   (Player1.take_turn)                     Outgoing command
 Player -> Game: My move is x                        (return value from Player1.take_turn)   
 Game -> Board: <color> move is <column>             (Board.move)
-Game -> Board: Has anyone got connect 4?            (Board.)
+Game -> Board: Has anyone got connect 4?            (Board.winner)
 Board -> Game: The game continues or, the winner is (return value from Board.move)
+Game -> Game: Next player turn                      (Game.next_turn)
 
 
 My plan of action:
@@ -69,3 +70,5 @@ Array indices: height = 6, width = 7
 winner_diagonal_rising
 
 want to start at height - 4 like others.
+
+Check for win... possibilities are nil, 'R', 'Y', 'tie'

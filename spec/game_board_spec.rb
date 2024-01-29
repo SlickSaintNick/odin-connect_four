@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# Counter characters 🔴  R 🟡  Y
-
 require_relative '../lib/game_board'
 
 describe GameBoard do
@@ -207,14 +205,14 @@ describe GameBoard do
       it 'displays the board correctly' do
         return_string = game_board_d_rising_win.display_board
         expected_string = <<~HEREDOC
-          . 1  2   3  4   5  6   7.
+          . 1  2  3  4  5  6  7.
           |⚫|⚫|⚫|⚫|⚫|⚫|⚫|
           |⚫|⚫|⚫|⚫|⚫|⚫|⚫|
           |⚫|⚫|⚫|⚫|🔴|🔴|⚫|
           |⚫|⚫|⚫|🔴|🟡|🟡|🟡|
           |⚫|⚫|🔴|🟡|🔴|🟡|🟡|
           |⚫|🔴|🟡|🔴|🔴|🟡|🔴|
-          '======================='
+          '===================='
         HEREDOC
         expect(return_string).to eql(expected_string)
       end

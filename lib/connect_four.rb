@@ -2,22 +2,31 @@
 
 # A Connect 4 game.
 class ConnectFour
-  def initialize
-    @player1 = Player.new('R')
-    @player2 = Player.new('Y')
+  def initialize(*names)
+    @player1 = Player.new('R', names[0])
+    @player2 = Player.new('Y', names[1])
     @current_player = @player1
     @board = GameBoard.new
   end
 
-  def play_game(player = @current_player)
-    # puts display
-    player_move = player.take_turn(@board.valid_moves)
-    system(exit) if player_move == 'EXIT'
-    @game_board.move(@current_player.color, player_move)
-    check_for_win = @game_board.winner
-    next_turn
+  def play_game
+    puts display_intro
+    gets
+    game_loop
   end
 
+  def game_loop(player = @current_player)
+    loop do
+      puts display
+      valid_moves = @board.valid_moves.map { |move| move + 1 }
+      player_move = player.take_turn(valid_moves) - 1
+      system(exit) if player_move == 'EXIT'
+      @board.move(@current_player.color, player_move)
+      winner = @board.winner
+      display_winner(winner) if winner
+      next_turn
+    end
+  end
 
   def next_turn
     @current_player = if @current_player == @player1
@@ -30,7 +39,7 @@ class ConnectFour
   def display
     display = display_title
     display += display_players
-    display += @board.display_board
+    display + @board.display_board
   end
 
   def display_players
@@ -43,5 +52,32 @@ class ConnectFour
 
   def display_title
     "🔴 CONNECT 4 🟡\n\n"
+  end
+
+  def display_intro
+    <<~HEREDOC
+         __________  _   ___   ______________________ __
+        / ____/ __ \\/ | / / | / / ____/ ____/_  __/ // /
+       / /   / / / /  |/ /  |/ / __/ / /     / / / // /_
+      / /___/ /_/ / /|  / /|  / /___/ /___  / / /__  __/
+      \\____/\\____/_/ |_/_/ |_/_____/\\____/ /_/    /_/
+
+      For two players.
+
+      Place four pieces in a row horizontally, vertically or diagonally.
+      Type the column number 1-7 to make your move.
+
+      Press Enter to continue...
+    HEREDOC
+  end
+
+  def display_winner(winner)
+    if winner == 'R' || 'Y'
+      puts "\n#{@current_player.name} won that round!\n"
+    elsif winner == 'tie'
+      puts "\nThe game was a tie!\n"
+    end
+    system(exit) if @current_player.play_again? == 'EXIT'
+    @board.clear
   end
 end

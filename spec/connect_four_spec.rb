@@ -3,7 +3,7 @@
 require_relative '../lib/connect_four'
 
 describe ConnectFour do
-  subject(:game) { described_class.new }
+  subject(:game) { described_class.new('NAME', 'NAME') }
 
   describe '#display_players' do
     it 'returns a string showing the players' do
@@ -44,28 +44,31 @@ describe ConnectFour do
              Yellow
              NAME
 
-          . 1  2   3  4   5  6   7.
+          . 1  2  3  4  5  6  7.
           |⚫|⚫|⚫|⚫|⚫|⚫|⚫|
           |⚫|⚫|⚫|⚫|⚫|⚫|⚫|
           |⚫|⚫|⚫|⚫|⚫|⚫|⚫|
           |⚫|⚫|⚫|⚫|⚫|⚫|⚫|
           |⚫|⚫|⚫|⚫|⚫|⚫|⚫|
           |⚫|⚫|⚫|⚫|⚫|⚫|⚫|
-          '======================='
+          '===================='
         HEREDOC
         expect(return_string).to eql(expected_string)
       end
     end
   end
 
-  describe '#play_game' do
-    subject(:game) { described_class.new }
+  describe '#game_loop' do
     let(:double_player1) { double('Player1') }
 
     context "when it is player 1's turn" do
       it 'sends a message to player 1 to take their turn' do
+        $stdout = StringIO.new
+        allow(game.instance_variable_get(:@board)).to receive(:move).and_return nil
+        allow(game.instance_variable_get(:@board)).to receive(:winner).and_return nil
+
         expect(double_player1).to receive(:take_turn)
-        game.play_game(double_player1)
+        game.game_loop(double_player1)
       end
     end
   end
@@ -73,6 +76,7 @@ describe ConnectFour do
   describe '#next turn' do
     context "when it is player 1's turn" do
       it 'swaps current player to player 2' do
+        $stdout = StringIO.new
         initial_player = game.instance_variable_get(:@current_player)
 
         game.next_turn
