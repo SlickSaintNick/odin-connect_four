@@ -16,16 +16,13 @@ class ConnectFour
   end
 
   def game_loop(player = @current_player)
-    loop do
+    # loop do
       puts display
-      valid_moves = @board.valid_moves.map { |move| move + 1 }
-      player_move = player.take_turn(valid_moves) - 1
-      system(exit) if player_move == 'EXIT'
+      player_move = player.take_turn(@board.valid_moves.map { |move| move + 1 }) - 1
       @board.move(@current_player.color, player_move)
-      winner = @board.winner
-      display_winner(winner) if winner
+      display_winner(@board.winner) if @board.winner
       next_turn
-    end
+    # end
   end
 
   def next_turn
@@ -72,6 +69,7 @@ class ConnectFour
   end
 
   def display_winner(winner)
+    puts display
     if winner == 'R' || 'Y'
       puts "\n#{@current_player.name} won that round!\n"
     elsif winner == 'tie'

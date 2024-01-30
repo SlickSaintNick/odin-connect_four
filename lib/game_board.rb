@@ -11,7 +11,9 @@ class GameBoard
   end
 
   def valid_moves
-    @board[0].each_index.select { |index| @board[0][index].nil? }
+    valid_moves = @board[0].each_index.select { |index| @board[0][index].nil? }
+    p valid_moves
+    valid_moves
   end
 
   # Place a move if it is valid - return the row index or ERROR if invalid.
@@ -92,6 +94,6 @@ class GameBoard
   end
 
   def clear
-    @board = @board.map { @board.map { nil } }
+    @board = Array.new(@height) { Array.new(@width) }
   end
 end

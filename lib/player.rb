@@ -12,8 +12,6 @@ class Player
   def take_turn(valid_moves)
     loop do
       input = ask_user_input
-      return 'EXIT' if input == 'EXIT'
-
       next unless test_input(input)
 
       return input.to_i if valid_moves.include?(input.to_i)
@@ -32,7 +30,7 @@ class Player
 
   def ask_user_input
     print '>> '
-    gets.chomp.strip.upcase
+    # gets.chomp.strip.upcase
   end
 
   def test_input(string)

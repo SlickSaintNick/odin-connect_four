@@ -61,13 +61,16 @@ describe ConnectFour do
   describe '#game_loop' do
     let(:double_player1) { double('Player1') }
 
+    before do
+      allow(game).to receive(:loop).and_yield
+      allow(double_player1).to receive(:take_turn).and_return(1)
+    end
+
     context "when it is player 1's turn" do
       it 'sends a message to player 1 to take their turn' do
         $stdout = StringIO.new
-        allow(game.instance_variable_get(:@board)).to receive(:move).and_return nil
-        allow(game.instance_variable_get(:@board)).to receive(:winner).and_return nil
 
-        expect(double_player1).to receive(:take_turn)
+        expect(double_player1).to receive(:take_turn).once
         game.game_loop(double_player1)
       end
     end

@@ -217,5 +217,35 @@ describe GameBoard do
         expect(return_string).to eql(expected_string)
       end
     end
+
+    describe "#clear" do
+      subject(:game_board_full_tie) { described_class.new }
+
+      before do
+        game_board_full_tie.board = [
+          ['Y', 'R', 'R', 'Y', 'R', 'R', 'R'],
+          ['Y', 'Y', 'R', 'R', 'R', 'Y', 'Y'],
+          ['Y', 'R', 'Y', 'Y', 'Y', 'R', 'R'],
+          ['R', 'Y', 'R', 'R', 'R', 'Y', 'R'],
+          ['R', 'Y', 'R', 'Y', 'Y', 'R', 'Y'],
+          ['R', 'Y', 'R', 'Y', 'R', 'Y', 'R']
+        ]
+      end
+
+      it 'clears the board when called, resetting it to nil' do
+        game_board_full_tie.clear
+
+        expect(game_board_full_tie.board).to eql(
+          [
+            [nil, nil, nil, nil, nil, nil, nil],
+            [nil, nil, nil, nil, nil, nil, nil],
+            [nil, nil, nil, nil, nil, nil, nil],
+            [nil, nil, nil, nil, nil, nil, nil],
+            [nil, nil, nil, nil, nil, nil, nil],
+            [nil, nil, nil, nil, nil, nil, nil]
+          ]
+        )
+      end
+    end
   end
 end

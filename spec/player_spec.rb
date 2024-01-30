@@ -4,7 +4,7 @@ require_relative '../lib/player'
 # require_relative '../lib/game_board'
 
 describe Player do
-  subject(:player) { described_class.new('R') }
+  subject(:player) { described_class.new('R', 'NAME') }
 
   describe '#test_input' do
     it 'returns true for valid inputs and false for invalid inputs' do
