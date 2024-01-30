@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative 'player'
+require_relative 'game_board'
+
 # A Connect 4 game.
 class ConnectFour
   def initialize(*names)
@@ -10,6 +13,7 @@ class ConnectFour
   end
 
   def play_game
+    clear_screen
     puts display_intro
     gets
     game_loop
@@ -27,17 +31,20 @@ class ConnectFour
   end
 
   def next_turn
-    @current_player = if @current_player == @player1
-                        @player2
-                      else
-                        @player1
-                      end
+    @current_player = @current_player == @player1 ? @player2 : @player1
   end
 
-  def display
+  def display(testing: true)
+    clear_screen(testing: testing)
     display = display_title
     display += display_players
     display + @board.display_board
+  end
+
+  def clear_screen(testing: false)
+    return if testing
+
+    Gem.win_platform? ? (system 'cls') : (system 'clear')
   end
 
   def display_players
@@ -45,7 +52,7 @@ class ConnectFour
     display += @current_player.color == 'R' ? ">> Red <<\n" : "   Red\n"
     display += "   #{@player1.name}\n\n"
     display += @current_player.color == 'Y' ? ">> Yellow <<\n" : "   Yellow\n"
-    display += "   #{@player2.name}\n\n"
+    display + "   #{@player2.name}\n\n"
   end
 
   def display_title
@@ -72,7 +79,7 @@ class ConnectFour
   def display_winner(winner)
     puts display
     case winner
-    when 'R' || 'Y'
+    when 'R', 'Y'
       puts "\n#{@current_player.name} won that round!\n"
     when 'tie'
       puts "\nThe game was a tie!\n"

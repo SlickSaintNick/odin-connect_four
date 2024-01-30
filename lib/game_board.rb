@@ -78,8 +78,9 @@ class GameBoard
   end
 
   def sort_arrays(*arrays)
-    arrays.each { |array| array.sort! }
+    arrays.each(&:sort!)
   end
+
   # The game is tied if the top row is full.
   def check_for_tie
     return 'tie' if @board[0].none?(nil)

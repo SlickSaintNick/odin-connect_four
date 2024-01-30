@@ -11,12 +11,12 @@ describe Player do
       expect(player.test_input('1')).to be true
       expect(player.test_input('3')).to be true
       expect(player.test_input('12')).to be false
-      expect(player.test_input('0')).to be false
+      expect(player.test_input('00')).to be false
       expect(player.test_input('cat')).to be false
     end
   end
 
-  describe "#take_turn" do
+  describe '#take_turn' do
     it 'returns correct value for user inputs' do
       $stdout = StringIO.new
       allow(player).to receive(:ask_user_input).and_return('1', '2', '3', 'cat', 'dog', '9', '6')

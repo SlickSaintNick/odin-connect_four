@@ -29,6 +29,6 @@ class Player
   end
 
   def test_input(string)
-    !!(string =~ /^[1-7]$/)
+    !!(string =~ /^[0-9]$/)
   end
 end

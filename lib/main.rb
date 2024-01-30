@@ -4,12 +4,12 @@ require_relative 'connect_four'
 require_relative 'player'
 require_relative 'game_board'
 
-puts 'Player 1 name?'
-print '>> '
-player1_name = gets.chomp
+def ask_name(player_number)
+  puts "Player #{player_number} name?"
+  print '>> '
+  gets.chomp
+end
 
-puts "\nPlayer 2 name?"
-print '>> '
-player2_name = gets.chomp
-
+player1_name = ask_name(1)
+player2_name = ask_name(2)
 ConnectFour.new(player1_name, player2_name).play_game

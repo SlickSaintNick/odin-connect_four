@@ -32,9 +32,14 @@ describe ConnectFour do
   end
 
   describe '#display' do
+    before do
+      allow(game).to receive(:clear_screen).with(testing: true).and_call_original
+      allow(game).to receive(:clear_screen).and_call_original
+    end
+
     context 'when first initialized' do
       it 'returns a string with the title, players and board' do
-        return_string = game.display
+        return_string = game.display(testing: true)
         expected_string = <<~HEREDOC
           🔴 CONNECT 4 🟡
 
@@ -87,6 +92,28 @@ describe ConnectFour do
         expect(game.instance_variable_get(:@current_player)).to eq(game.instance_variable_get(:@player2))
         expect(game.instance_variable_get(:@current_player)).not_to eq(initial_player)
       end
+    end
+  end
+
+  describe '#display_winner' do
+    before do
+      allow(game.instance_variable_get(:@current_player)).to receive(:play_again?) { 'yes' }
+      $stdout = StringIO.new
+    end
+
+    it 'displays correct message when R is the winner' do
+      expect { game.display_winner('R') }.to output(/\nNAME won that round!\n/).to_stdout
+      game.display_winner('R')
+    end
+
+    it 'displays correct message when Y is the winner' do
+      expect { game.display_winner('Y') }.to output(/\nNAME won that round!\n/).to_stdout
+      game.display_winner('Y')
+    end
+
+    it 'displays correct message when game tied' do
+      expect { game.display_winner('tie') }.to output(/\nThe game was a tie!\n/).to_stdout
+      game.display_winner('tie')
     end
   end
 end
