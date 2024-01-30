@@ -34,15 +34,15 @@ class ConnectFour
     @current_player = @current_player == @player1 ? @player2 : @player1
   end
 
-  def display(testing: true)
-    clear_screen(testing: testing)
+  def display
+    clear_screen
     display = display_title
     display += display_players
     display + @board.display_board
   end
 
   def clear_screen(testing: false)
-    return if testing
+    return if testing == true
 
     Gem.win_platform? ? (system 'cls') : (system 'clear')
   end

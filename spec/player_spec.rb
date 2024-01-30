@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative '../lib/player'
-# require_relative '../lib/game_board'
 
 describe Player do
   subject(:player) { described_class.new('R', 'NAME') }

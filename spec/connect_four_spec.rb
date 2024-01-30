@@ -32,14 +32,9 @@ describe ConnectFour do
   end
 
   describe '#display' do
-    before do
-      allow(game).to receive(:clear_screen).with(testing: true).and_call_original
-      allow(game).to receive(:clear_screen).and_call_original
-    end
-
     context 'when first initialized' do
       it 'returns a string with the title, players and board' do
-        return_string = game.display(testing: true)
+        return_string = game.display
         expected_string = <<~HEREDOC
           🔴 CONNECT 4 🟡
 
