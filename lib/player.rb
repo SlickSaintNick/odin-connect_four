@@ -4,7 +4,7 @@
 class Player
   attr_accessor :color, :name
 
-  def initialize(color, name = ask_name(color))
+  def initialize(color, name = 'Player')
     @color = color
     @name = name
   end
@@ -18,11 +18,6 @@ class Player
     end
   end
 
-  def ask_name(color)
-    puts color == 'R' ? 'RED player name?' : 'YELLOW player name?'
-    ask_user_input
-  end
-
   def play_again?
     puts "Press enter to play again, or type 'exit' to finish."
     ask_user_input
@@ -30,7 +25,7 @@ class Player
 
   def ask_user_input
     print '>> '
-    # gets.chomp.strip.upcase
+    gets.chomp.strip.upcase
   end
 
   def test_input(string)

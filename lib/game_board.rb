@@ -11,9 +11,7 @@ class GameBoard
   end
 
   def valid_moves
-    valid_moves = @board[0].each_index.select { |index| @board[0][index].nil? }
-    p valid_moves
-    valid_moves
+    @board[0].each_index.select { |index| @board[0][index].nil? }
   end
 
   # Place a move if it is valid - return the row index or ERROR if invalid.
@@ -49,10 +47,10 @@ class GameBoard
   # This method tests in order for horizontal, vertical, diagonal (rising) and diagonal (falling) winning
   # combinations. If all are passed, it checks for a tie.
   def winner
-    winner_search(row_cursor: 0) ||
-      winner_search(start_row: @height - 4, end_column: @width - 1, column_cursor: 0) ||
-      winner_search(end_row: 3, row_cursor: -1) ||
-      winner_search(start_row: @height - 4) ||
+    winner_search(cols: [0, @width - 4], step: [0, 1]) ||
+      winner_search(rows: [0, @height - 4], step: [1, 0]) ||
+      winner_search(rows: [0, @height - 4], cols: [@width - 4, @width - 1], step: [1, -1]) ||
+      winner_search(rows: [0, @height - 4], cols: [0, @width - 4], step: [1, 1]) ||
       check_for_tie ||
       false
   end
@@ -61,23 +59,27 @@ class GameBoard
   # corner by default and moving donwards and diagonal by default. Finishing on the top
   # row and 4th column.
   def winner_search(
-    start_row: @height - 1, \
-    end_row: 0, \
-    start_column: 0, \
-    end_column: @width - 4, \
-    row_cursor: 1, \
-    column_cursor: 1 \
+    array: @board, \
+    match: 4, \
+    rows: [0, array.length - 1], \
+    cols: [0, array[0].length - 1],
+    step: [0, 1] \
   )
-    start_row.downto(end_row) do |row|
-      start_column.upto(end_column) do |column|
+    sort_arrays(rows, cols)
+
+    rows[0].upto(rows[1]) do |row|
+      cols[0].upto(cols[1]) do |col|
         test_group = []
-        0.upto(3) { |index| test_group.push(@board[row + (index * row_cursor)][column + (index * column_cursor)]) }
+        0.upto(match - 1) { |index| test_group.push(@board[row + (index * step[0])][col + (index * step[1])]) }
         return test_group_winner(test_group) if test_group_winner(test_group)
       end
     end
     false
   end
 
+  def sort_arrays(*arrays)
+    arrays.each { |array| array.sort! }
+  end
   # The game is tied if the top row is full.
   def check_for_tie
     return 'tie' if @board[0].none?(nil)
